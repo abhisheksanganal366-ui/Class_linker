@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>My Assignments</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar student-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/student/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header"><h2>📝 My Assignments</h2></div>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>Assignment</th><th>Status</th><th>Marks Obtained</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="a : ${assignments}">
+                    <td th:text="${a.studentName}"></td>
+                    <td>
+                        <span th:class="${a.status == 'Submitted'} ? 'badge badge-green' : 'badge badge-red'"
+                              th:text="${a.status}"></span>
+                    </td>
+                    <td th:text="${a.marks}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(assignments)}" class="empty-state">No assignments yet.</div>
+    </div>
+</div>
+</body>
+</html>

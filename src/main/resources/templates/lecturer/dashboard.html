@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ClassLinker - Lecturer Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar lecturer-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        👤 <span th:text="${user.name}">Lecturer</span>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="dashboard-header">
+        <h2>Welcome, <span th:text="${user.name}">Lecturer</span>!</h2>
+        <p>Lecturer Dashboard</p>
+    </div>
+    <div class="menu-grid">
+        <a th:href="@{/lecturer/announcements}" class="menu-card">
+            <div class="menu-icon">📢</div>
+            <div class="menu-title">Announcements</div>
+            <div class="menu-desc">Create & manage announcements</div>
+        </a>
+        <a th:href="@{/lecturer/resources}" class="menu-card">
+            <div class="menu-icon">📁</div>
+            <div class="menu-title">Resources</div>
+            <div class="menu-desc">Upload study materials</div>
+        </a>
+        <a th:href="@{/lecturer/assignments}" class="menu-card">
+            <div class="menu-icon">📝</div>
+            <div class="menu-title">Assignments</div>
+            <div class="menu-desc">Create & track assignments</div>
+        </a>
+        <a th:href="@{/lecturer/tests}" class="menu-card">
+            <div class="menu-icon">📊</div>
+            <div class="menu-title">Test Marks</div>
+            <div class="menu-desc">Manage test scores</div>
+        </a>
+        <a th:href="@{/lecturer/students}" class="menu-card">
+            <div class="menu-icon">👥</div>
+            <div class="menu-title">Students</div>
+            <div class="menu-desc">Manage student records</div>
+        </a>
+        <a th:href="@{/lecturer/qa}" class="menu-card">
+            <div class="menu-icon">❓</div>
+            <div class="menu-title">Q &amp; A</div>
+            <div class="menu-desc">Answer student questions</div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

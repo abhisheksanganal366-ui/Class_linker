@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Resources</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar student-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/student/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header"><h2>📁 Resources</h2></div>
+    <form th:action="@{/student/resources}" method="get" class="search-form">
+        <input type="text" name="search" th:value="${search}" placeholder="Search resources...">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a th:href="@{/student/resources}" class="btn btn-outline">Clear</a>
+    </form>
+    <div class="card-list">
+        <div th:each="res : ${resources}" class="card">
+            <div class="card-header">
+                <h3 th:text="${res.name}"></h3>
+                <span class="badge badge-blue" th:text="${res.fileType}"></span>
+            </div>
+            <p th:text="${res.description}"></p>
+            <p><a th:href="${res.fileLink}" target="_blank" class="link">🔗 Open Resource</a></p>
+        </div>
+        <div th:if="${#lists.isEmpty(resources)}" class="empty-state">No resources found.</div>
+    </div>
+</div>
+</body>
+</html>

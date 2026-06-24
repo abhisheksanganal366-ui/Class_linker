@@ -1,0 +1,27 @@
+# Maven
+target/
+maven/
+maven.zip
+maven_tmp/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.classpath
+*.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database (generated at runtime)
+*.db
+
+# Logs
+*.log
+logs/
+
+# Spring Boot
+HELP.md

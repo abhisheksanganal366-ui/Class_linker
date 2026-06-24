@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Q&amp;A</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar lecturer-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/lecturer/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header"><h2>❓ Student Q &amp; A</h2></div>
+    <div class="card-list">
+        <div th:each="q : ${questions}" class="card">
+            <div class="card-header">
+                <span><strong th:text="${q.studentName}"></strong> (<span th:text="${q.rollNumber}"></span>)</span>
+                <span class="badge" th:text="${q.createdAt}"></span>
+            </div>
+            <p class="question-text">❓ <span th:text="${q.question}"></span></p>
+            <div th:if="${q.answer != null and !q.answer.isEmpty()}" class="answer-box">
+                ✅ <span th:text="${q.answer}"></span>
+            </div>
+            <div class="card-footer">
+                <form th:action="@{/lecturer/qa/answer}" method="post" class="answer-form">
+                    <input type="hidden" name="id" th:value="${q.id}">
+                    <input type="text" name="answer" placeholder="Write your answer..."
+                           th:value="${q.answer}" class="answer-input">
+                    <button type="submit" class="btn btn-primary btn-sm">Answer</button>
+                </form>
+                <a th:href="@{'/lecturer/qa/delete/' + ${q.id}}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Delete question?')">Delete</a>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(questions)}" class="empty-state">No questions from students yet.</div>
+    </div>
+</div>
+</body>
+</html>

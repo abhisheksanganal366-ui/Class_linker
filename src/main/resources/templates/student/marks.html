@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>My Marks</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar student-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/student/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header"><h2>📊 My Test Marks</h2></div>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>Test Name</th><th>Marks Obtained</th><th>Total Marks</th><th>Percentage</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="m : ${marks}">
+                    <td th:text="${m.testName}"></td>
+                    <td th:text="${m.marks}"></td>
+                    <td th:text="${m.totalMarks}"></td>
+                    <td>
+                        <span th:text="${m.totalMarks > 0} ? ${#numbers.formatDecimal(m.marks * 100.0 / m.totalMarks, 1, 1)} + '%' : 'N/A'"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(marks)}" class="empty-state">No test marks yet.</div>
+    </div>
+</div>
+</body>
+</html>

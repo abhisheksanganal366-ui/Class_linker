@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Submissions</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar lecturer-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/lecturer/assignments}" class="btn btn-sm btn-outline">← Assignments</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header">
+        <h2>Submissions: <span th:text="${assignment.title}"></span></h2>
+        <span class="badge badge-orange">Total Marks: <span th:text="${assignment.totalMarks}"></span></span>
+    </div>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>Student</th><th>Roll No</th><th>Status</th><th>Marks</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="sub : ${submissions}">
+                    <td th:text="${sub.studentName}"></td>
+                    <td th:text="${sub.rollNumber}"></td>
+                    <td>
+                        <span th:class="${sub.status == 'Submitted'} ? 'badge badge-green' : 'badge badge-red'"
+                              th:text="${sub.status}"></span>
+                    </td>
+                    <td th:text="${sub.marks}"></td>
+                    <td>
+                        <form th:action="@{/lecturer/submissions/update}" method="post" class="inline-form">
+                            <input type="hidden" name="id" th:value="${sub.id}">
+                            <input type="hidden" name="assignmentId" th:value="${assignment.id}">
+                            <select name="status" class="input-sm">
+                                <option th:selected="${sub.status == 'Submitted'}">Submitted</option>
+                                <option th:selected="${sub.status == 'Not Submitted'}">Not Submitted</option>
+                            </select>
+                            <input type="number" name="marks" th:value="${sub.marks}" class="input-sm" style="width:60px" min="0">
+                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(submissions)}" class="empty-state">No students enrolled yet.</div>
+    </div>
+</div>
+</body>
+</html>

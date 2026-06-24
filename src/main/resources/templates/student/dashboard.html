@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ClassLinker - Student Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar student-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        👤 <span th:text="${user.name}">Student</span>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="dashboard-header">
+        <h2>Welcome, <span th:text="${user.name}">Student</span>!</h2>
+        <p>Student Dashboard &nbsp;|&nbsp; Roll No: <span th:text="${user.rollNumber}"></span></p>
+    </div>
+    <div class="menu-grid">
+        <a th:href="@{/student/announcements}" class="menu-card student-card">
+            <div class="menu-icon">📢</div>
+            <div class="menu-title">Announcements</div>
+            <div class="menu-desc">View latest announcements</div>
+        </a>
+        <a th:href="@{/student/resources}" class="menu-card student-card">
+            <div class="menu-icon">📁</div>
+            <div class="menu-title">Resources</div>
+            <div class="menu-desc">Access study materials</div>
+        </a>
+        <a th:href="@{/student/assignments}" class="menu-card student-card">
+            <div class="menu-icon">📝</div>
+            <div class="menu-title">Assignments</div>
+            <div class="menu-desc">View your assignments</div>
+        </a>
+        <a th:href="@{/student/marks}" class="menu-card student-card">
+            <div class="menu-icon">📊</div>
+            <div class="menu-title">Test Marks</div>
+            <div class="menu-desc">Check your scores</div>
+        </a>
+        <a th:href="@{/student/questions}" class="menu-card student-card">
+            <div class="menu-icon">❓</div>
+            <div class="menu-title">Ask a Question</div>
+            <div class="menu-desc">Q&amp;A with lecturer</div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

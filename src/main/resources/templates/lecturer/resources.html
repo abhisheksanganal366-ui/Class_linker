@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Resources</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar lecturer-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/lecturer/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header">
+        <h2>📁 Resources</h2>
+        <button class="btn btn-success" onclick="openModal('addModal')">+ Add Resource</button>
+    </div>
+    <div class="card-list">
+        <div th:each="res : ${resources}" class="card">
+            <div class="card-header">
+                <h3 th:text="${res.name}"></h3>
+                <span class="badge badge-blue" th:text="${res.fileType}"></span>
+            </div>
+            <p th:text="${res.description}"></p>
+            <p><a th:href="${res.fileLink}" target="_blank" class="link" th:text="${res.fileLink}"></a></p>
+            <div class="card-footer">
+                <span th:text="${res.createdAt}"></span>
+                <a th:href="@{'/lecturer/resources/delete/' + ${res.id}}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Delete this resource?')">Delete</a>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(resources)}" class="empty-state">No resources yet.</div>
+    </div>
+</div>
+
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Add Resource</h3>
+            <span class="close" onclick="closeModal('addModal')">&times;</span></div>
+        <form th:action="@{/lecturer/resources/add}" method="post">
+            <div class="form-group"><label>Resource Name</label>
+                <input type="text" name="name" required></div>
+            <div class="form-group"><label>Description</label>
+                <textarea name="description" rows="3"></textarea></div>
+            <div class="form-group"><label>Type</label>
+                <select name="fileType">
+                    <option>PDF</option><option>PPT</option>
+                    <option>Notes</option><option>Video Link</option><option>Other</option>
+                </select></div>
+            <div class="form-group"><label>File Link / URL</label>
+                <input type="text" name="fileLink"></div>
+            <button type="submit" class="btn btn-success btn-full">Add Resource</button>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

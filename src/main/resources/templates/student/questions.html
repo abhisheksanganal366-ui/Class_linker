@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>My Questions</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar student-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/student/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header"><h2>❓ Ask a Question</h2></div>
+
+    <div class="card" style="margin-bottom:24px">
+        <form th:action="@{/student/questions/ask}" method="post">
+            <div class="form-group">
+                <label>Your Question</label>
+                <textarea name="question" rows="3" placeholder="Type your question here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Submit Question</button>
+        </form>
+    </div>
+
+    <h3>My Questions</h3>
+    <div class="card-list">
+        <div th:each="q : ${questions}" class="card">
+            <p class="question-text">❓ <span th:text="${q.question}"></span></p>
+            <div th:if="${q.answer != null and !q.answer.isEmpty()}" class="answer-box">
+                ✅ <strong>Answer:</strong> <span th:text="${q.answer}"></span>
+            </div>
+            <div th:unless="${q.answer != null and !q.answer.isEmpty()}" class="pending-box">
+                ⏳ Awaiting answer...
+            </div>
+            <div class="card-footer">
+                <span class="badge" th:text="${q.createdAt}"></span>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(questions)}" class="empty-state">No questions asked yet.</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Tests</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar lecturer-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/lecturer/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header">
+        <h2>📊 Test Marks</h2>
+        <button class="btn btn-success" onclick="openModal('addModal')">+ Add Test</button>
+    </div>
+    <div class="card-list">
+        <div th:each="t : ${tests}" class="card">
+            <div class="card-header">
+                <h3 th:text="${t.testName}"></h3>
+                <span class="badge" th:text="${t.createdAt}"></span>
+            </div>
+            <div class="card-footer">
+                <span>Total Marks: <strong th:text="${t.totalMarks}"></strong></span>
+                <a th:href="@{'/lecturer/tests/' + ${t.id} + '/marks'}"
+                   class="btn btn-primary btn-sm">Enter / Edit Marks</a>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(tests)}" class="empty-state">No tests yet.</div>
+    </div>
+</div>
+
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Add Test</h3>
+            <span class="close" onclick="closeModal('addModal')">&times;</span></div>
+        <form th:action="@{/lecturer/tests/add}" method="post">
+            <div class="form-group"><label>Test Name</label>
+                <input type="text" name="testName" required></div>
+            <div class="form-group"><label>Total Marks</label>
+                <input type="number" name="totalMarks" min="1" required></div>
+            <button type="submit" class="btn btn-success btn-full">Add Test</button>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

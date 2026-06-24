@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Test Marks</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar lecturer-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/lecturer/tests}" class="btn btn-sm btn-outline">← Tests</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header">
+        <h2>Marks: <span th:text="${test.testName}"></span></h2>
+        <span class="badge">Total: <span th:text="${test.totalMarks}"></span></span>
+    </div>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>Student</th><th>Roll No</th><th>Marks</th><th>Out of</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="m : ${marks}">
+                    <td th:text="${m.studentName}"></td>
+                    <td th:text="${m.rollNumber}"></td>
+                    <td th:text="${m.marks}"></td>
+                    <td th:text="${m.totalMarks}"></td>
+                    <td>
+                        <form th:action="@{/lecturer/tests/marks/update}" method="post" class="inline-form">
+                            <input type="hidden" name="id" th:value="${m.id}">
+                            <input type="hidden" name="testId" th:value="${test.id}">
+                            <input type="number" name="marks" th:value="${m.marks}"
+                                   class="input-sm" style="width:70px" min="0" th:max="${test.totalMarks}">
+                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(marks)}" class="empty-state">No students enrolled yet.</div>
+    </div>
+</div>
+</body>
+</html>

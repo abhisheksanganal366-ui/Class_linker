@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Announcements</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<nav class="navbar lecturer-nav">
+    <div class="nav-brand">📚 ClassLinker</div>
+    <div class="nav-user">
+        <a th:href="@{/lecturer/dashboard}" class="btn btn-sm btn-outline">← Dashboard</a>
+        <a th:href="@{/logout}" class="btn btn-sm btn-outline">Logout</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header">
+        <h2>📢 Announcements</h2>
+        <button class="btn btn-success" onclick="openModal('addModal')">+ Add Announcement</button>
+    </div>
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+    <div class="card-list">
+        <div th:each="ann : ${announcements}" class="card">
+            <div class="card-header">
+                <h3 th:text="${ann.title}"></h3>
+                <span class="badge" th:text="${ann.createdAt}"></span>
+            </div>
+            <p th:text="${ann.content}"></p>
+            <div class="card-footer">
+                <span>By: <strong th:text="${ann.lecturerName}"></strong></span>
+                <div>
+                    <button class="btn btn-warning btn-sm"
+                        th:onclick="|openEditModal(${ann.id}, '${ann.title}', '${ann.content}')|">Edit</button>
+                    <a th:href="@{'/lecturer/announcements/delete/' + ${ann.id}}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Delete this announcement?')">Delete</a>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(announcements)}" class="empty-state">No announcements yet.</div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Add Announcement</h3>
+            <span class="close" onclick="closeModal('addModal')">&times;</span></div>
+        <form th:action="@{/lecturer/announcements/add}" method="post">
+            <div class="form-group"><label>Title</label>
+                <input type="text" name="title" required></div>
+            <div class="form-group"><label>Content</label>
+                <textarea name="content" rows="4" required></textarea></div>
+            <button type="submit" class="btn btn-success btn-full">Add</button>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Edit Announcement</h3>
+            <span class="close" onclick="closeModal('editModal')">&times;</span></div>
+        <form th:action="@{/lecturer/announcements/edit}" method="post">
+            <input type="hidden" id="editId" name="id">
+            <div class="form-group"><label>Title</label>
+                <input type="text" id="editTitle" name="title" required></div>
+            <div class="form-group"><label>Content</label>
+                <textarea id="editContent" name="content" rows="4" required></textarea></div>
+            <button type="submit" class="btn btn-primary btn-full">Update</button>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
